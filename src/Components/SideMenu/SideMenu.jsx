@@ -9,6 +9,10 @@ import AdUnitsIcon from '@mui/icons-material/AdUnits'
 import TokenIcon from '@mui/icons-material/Token'
 import QuizIcon from '@mui/icons-material/Quiz'
 import NotificationsIcon from '@mui/icons-material/Notifications'
+import Button from '@mui/material/Button'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+import { Typography } from '@mui/material'
 
 const { SubMenu } = Menu
 
@@ -29,102 +33,66 @@ const SideMenu = (props) => {
     const handleClick = (e) => {
         setKey(parseInt(e?.key))
     }
+    console.log(user)
     return (
         <div className='home-main'>
             <div className='flex-row'>
                 <div style={{ marginTop: mobile ? 56 : 64 }}>
                     <Menu
                         onClick={handleClick}
-                        style={{ height: `calc(100vh - 65px)` }}
+                        style={{ height: `calc(100vh - 65px)`, backgroundColor:"#fff", color:"#e91e63" }}
                         defaultOpenKeys={[setActiveMenu(location?.pathname)]}
                         defaultSelectedKeys={[setActiveMenu(location?.pathname)]}
                         mode='inline'
                         inlineCollapsed={inlineCollapsed}
-                    >
+                        >
+                            <Typography variant='h4' sx={{margin:" 2em 0 1em  1em", fontWeight:"bold",color:"#e91e63"}}>
+                                Welcome! < br />
+                                {user.fullName}<br />
+                                <Button variant='outlined' sx={{color:"#e91e63", border:"1px solid #e91e63"}}>View Profile &nbsp;</Button>
+                            </Typography>
+                         
+                         
                         {drawerRoutes?.map((v, i) => {
-                            if (v?.isSubMenu && v?.children?.length) {
-                                return <SubMenu key={i} icon={v.icon} title={v?.title} style={{ fontSize: 18 }}>
-                                    {v?.children?.map((y, j) => {
-                                        return (
-                                            <Menu.Item key={`${i}-${j}`} icon={y.icon}>
-                                                <Link
-                                                    to={y?.route}
-                                                    onClick={() => { return false }}
-                                                    className='side-list'
-                                                >
-                                                    {y.title}
-                                                </Link>
-                                            </Menu.Item>
-                                        )
-                                    })}
-                                </SubMenu>
-                            }
+                            // if (v?.isSubMenu && v?.children?.length) {
+                                // return <SubMenu key={i} icon={v.icon} title={v?.title} style={{ fontSize: 18 }}>
+                                //     {v?.children?.map((y, j) => {
+                                        
+                                //         return (
+                                            
+                                //             <Menu.Item key={`${i}-${j}`} icon={y.icon}>
+                                //                 <Link
+                                //                     to={y?.route}
+                                //                     onClick={() => { return false }}
+                                //                     className='side-list'
+                                //                     >
+                                //                         nfngjdf
+                                //                     {console.log(y.title)}
+                                //                 </Link>
+                                //             </Menu.Item>
+                                //         )
+                                //     })}
+                                // </SubMenu>
+                            // }
                             return (
-                                <Menu.Item key={i} icon={v.icon}>
+                                <>
+                                
+                                <Menu.Item key={i} icon={v.icon} sx={{color:"#e91e63"}}>   
                                     <Link
                                         to={v?.route}
                                         onClick={() => { return false }}
                                         className='side-list'
-                                    >
+                                   style={{color:"#e91e63", fontSize:"1.2em"}}
+                                        >
                                         {v.title}
+                                        
                                     </Link>
                                 </Menu.Item>
+                                
+                                </>
                             )
                         })}
-                        {user?.userType === 'business' ? <Menu.Item key={7} icon={<QuizIcon />}>
-                            <Link
-                                to={allPaths.QUESTIONS}
-                                onClick={() => { return false }}
-                                className='side-list'
-                            >
-                                Questions
-                            </Link>
-                        </Menu.Item> : null}
-                        {user?.userType === 'business' && user?.subscription?.subscriptionTypes?.includes('loyalty') ? <Menu.Item key={8} icon={<AdUnitsIcon />}>
-                            <Link
-                                to={allPaths.ADVERTISMENT}
-                                onClick={() => { return false }}
-                                className='side-list'
-                            >
-                                Advertisement
-                            </Link>
-                        </Menu.Item> : null}
-                        {user?.userType === 'business' && user?.subscription?.subscriptionTypes?.includes('loyalty') ? <Menu.Item key={9} icon={<TokenIcon />}>
-                            <Link
-                                to={allPaths.COUPON}
-                                onClick={() => { return false }}
-                                className='side-list'
-                            >
-                                Coupons
-                            </Link>
-                        </Menu.Item> : null}
-                        {user?.userType === 'guest' ? <Menu.Item key={10} icon={<SavingsIcon />}>
-                            <Link
-                                to={allPaths.SAVINGS}
-                                onClick={() => { return false }}
-                                className='side-list'
-                            >
-                                Savings
-                            </Link>
-                        </Menu.Item> : null}
-                        {user?.userType === 'business' ? <Menu.Item key={11} icon={<NotificationsIcon />}>
-                            <Link
-                                to={allPaths.NOTIFICATION}
-                                onClick={() => { return false }}
-                                className='side-list'
-                            >
-                                Notification
-                            </Link>
-                        </Menu.Item> : null}
-                        {!isAdmin && user?.subscription && user?.subscription?.subscriptionTypes?.indexOf('ownCard') !== -1 ? <Menu.Item key={12} icon={<CardGiftcard />}>
-                            <Link
-                                to={allPaths.CARDS}
-                                onClick={() => { return false }}
-                                className='side-list'
-                            >
-                                Cards
-                            </Link>
-                        </Menu.Item> : null}
+                       
                     </Menu>
                 </div>
             </div>
